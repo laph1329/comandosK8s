@@ -4,17 +4,38 @@
 //iniciar minikube (previamente tener instalado chocolate y minikube.exe)
 minikube start
 
-//ver el estado de minikube
+//ver el estado
 minikube status
 
-//ver el log de minikube
+//ver el log
 minikube logs
 
-//ver ip de minikube
+//ver ip
 minikube ip
 
-//dashboard de minikube
+//ver dashboard
 minikube dashboard
 
-//dentro del contenedor de minikube
+//dentro del contenedor
 minikube ssh
+
+//ver cluster creados
+minikube profile list
+
+//crear un cluster con 2 nodos (ojo: el nombre no permite _ )
+minikube start --driver=docker -p [nombre_cluster] --nodes=2
+
+//eliminar cluster
+minikube delete -p [nombre_cluster]
+
+//cambiar el tamaño de los nodes
+minikube config set memory 2G -p [nombre_cluster]
+
+//obtener tamaño de memoria
+minikube config get memory
+
+//cambiar de profile
+minikube profile [name_cluster]
+
+//trabajar con otro container-runtime
+minikube start --container-runtime=cri-o -p [name_cluster]
