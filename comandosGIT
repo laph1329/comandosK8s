@@ -1,0 +1,14 @@
+******************************************************************
+*******************************GIT********************************
+******************************************************************
+// ver usuario y email
+git config user.name
+git config user.email
+
+//modificar de manera local usuario y contraseña
+git config user.name "<nuevo_nombre_usuario>"
+git config user.email "<nuevo_correo_electrónico>"
+
+//modificar de manera global usuario y contraseña
+git config --global user.name "<nuevo_nombre_usuario>"
+git config --global user.email "<nuevo_correo_electrónico>"

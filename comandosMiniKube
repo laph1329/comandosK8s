@@ -1,0 +1,20 @@
+******************************************************************
+****************************MINIKUBE******************************
+******************************************************************
+//iniciar minikube (previamente tener instalado chocolate y minikube.exe)
+minikube start
+
+//ver el estado de minikube
+minikube status
+
+//ver el log de minikube
+minikube logs
+
+//ver ip de minikube
+minikube ip
+
+//dashboard de minikube
+minikube dashboard
+
+//dentro del contenedor de minikube
+minikube ssh
