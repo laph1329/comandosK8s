@@ -1,3 +1,169 @@
 ******************************************************************
 ****************************KUBECTL*******************************
 ******************************************************************
+
+//obtener lista pods
+kubectl get pods
+
+//obtener lista pods con mas detalles
+kubectl get pods -o wide
+
+//crear pods
+kubectl run [name_pod] --image=[name_image]
+
+//crear pods con puerto (--generator crea el manifiesto yaml)
+kubectl run [name_pod] --image=[name_image] --port=8080 --generator=run-pod/v1
+
+//ver mas propiedades de un pod, 2 maneras
+kubectl describe pod [name_pod]
+kubectl describe pod/[name_pod]
+
+//ver la estructura de carpetas dentro de un pod
+kubectl exec [name_pod] -- ls
+
+//ver datos de la maquina del contenedor, como el kernel
+kubectl exec [name_pod] -- uname -a
+
+//activar modo interactivo dentro del pod
+kubectl exec [name_pod] -it -- bash
+    //para salir
+    exit
+
+//ver logs
+kubectl logs [name_pod]
+
+//quedarse pegado al log
+kubectl logs -f [name_pod]
+
+//ver ultimas 30 lineas del log
+kubectl logs [name_pod] --tail=30
+
+//nos permite acceder al recurso del cluster y acceder a las aplicaciones
+//nos abre un puerto por el que se puede preguntar por las características del cluster y las aplicaciones
+kubectl proxy
+
+//acceder a un recurso tipo web sin crear servicio
+kubectl port-forward [name_pod] 9999:80             (puertoExponer:puertoInterno) la ruta seria localhost:9999
+
+
+
+
+//crear pods con un archivo yml
+kubectl create -f nginx.yaml
+
+//exponer aplicacion con servicio de forma imperativa (nombre del servicio no puede tener "_" guion bajo)
+kubectl expose pod [pod_name] --name=[service_name] --port=80 --type=LoadBalancer
+
+//extraer el yml de un pod
+kubectl get pod/nginx -o yaml
+kubectl get pod/nginx -o json
+
+//extraer el yml de un pod a un fichero
+kubectl get pod/nginx -o yaml > ng.yaml
+kubectl get pod/nginx -o json > ng.json
+
+//eliminar pods
+kubectl delete pod/[pod_name]
+kubectl delete pod [pod_name]
+
+//borrar eliminar multiples pods
+kubectl delete pod [pod_name],[pod_name1],[pod_name2]
+
+//eliminar pod con tiempo de retraso
+kubectl delete pod [pod_name] --grace-period=5      (lo eliminará luego de 5 segundos)
+
+//eliminar pod inmediatamente, ya que normalmente espera que terminen los procesos
+kubectl delete pod [pod_name] --now
+
+//borrar todos los pods (con cuidado)
+kubectl delete pods --all
+
+//borrar todos pods, deployment, services (con cuidado peligroso) el servicio kubernetes también se borrara pero se
+//vuele a crear en automatico
+kubectl delete all --all
+
+//crear pods con varios containers usando archivo yaml (ojo: ambos tienen la misma IP, ya que la ip es por pod, no por container)
+kubectl apply -f multi.yaml
+
+//ver logs del container de un pod con varios container
+
+    //al colocar el comando normal toma un por defecto y lo muestra
+        kubectl logs [pod_name]
+
+    //para acceder a otro contenedor
+        kubectl logs [pod_name] -c [container_name]
+
+    //para quedarse pegado al log
+        kubectl logs -f [pod_name] -c [container_name]
+
+    //acceder al contenedor
+        kubectl exec [pod_name] -c [container_name]
+
+    //acceder al contenedor, y ejecutar comando fecha
+        kubectl exec [pod_name] -c [container_name] -- date
+
+
+//etiqueta apply es similar a create, solo que apply si permite modificaciones , create no permite modificaciones
+    kubectl apply -f [yml_name].yml
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////LABELS//////////////////
+
+//ver las etiquetas de un pod
+    kubectl get pod [pod_name] --show-labels
+    kubectl get pods [pod_name] --show-labels
+
+//ver las etiquetas de varios pod
+    kubectl get pod  --show-labels
+    kubectl get pods  --show-labels
+
+//agrega columna(s) en la respuesta de un pod (asi no exista las columnas, igual las muestra)
+    kubectl get pod [pod_name] --show-labels -L [column_name],[column_name2]
+
+//agrega una columna(s) en la respuesta de varios pod
+    kubectl get pod --show-labels -L [column_name],[column_name2]
+
+//agregar label de forma imperativa
+    kubectl label pod [pod_name] [key_name]=[value]
+
+//sobreescribir una etiqueta
+    kubectl label --overwrite pod/[pod_name] [key]=[value]
+
+//eliminar un label
+    kubectl label pod [pod_name] [label_name]-
+
+////////////////////////////////////////////////////////////////////////////////////////////SELECTORES//////////////////
+
+
+//Filtrar (ojo -l en minúscula)
+
+    kubectl get pods --show-labels -l responsable=[value]
+    kubectl get pods --show-labels -l responsable==[value]
+
+//Filtrar con 2 selectores (ojo -l en minúscula)
+
+    kubectl get pods --show-labels -l responsable=[value],zone=[value]
+
+//filtrar diferente
+
+    kubectl get pods --show-labels -l responsable!=[value],zone=[value]
+
+//filtrar 1 selector varios valores
+
+    kubectl get pods --show-labels -l 'responsable in([value])'
+    kubectl get pods --show-labels -l 'responsable in([value],[value2])'
+
+//filtrar 1 selector varios valores que no esten incluidos
+
+    kubectl get pods --show-labels -l 'responsable notin([value])'
+    kubectl get pods --show-labels -l 'responsable notin([value],[value2])'
+
+//eliminar pods que no tengan un determinado label
+
+    kubectl delete pods -l responsable=[value]
+
+
+////////////////////////////////////////////////////////////////////////////////////////////ANOTACIONES/////////////////
+
+//buscar anotaciones (el primer punto hace referencia al primer nivel del json)
+kubectl get pod [pod_name] -o jsonpath={.metadata.annotations}

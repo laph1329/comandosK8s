@@ -1,0 +1,19 @@
+******************************************************************
+****************************DOCKER********************************
+******************************************************************
+
+//iniciar sesion DockerHub
+docker login
+
+//ver imagenes
+docker images
+
+//ver el contenido del Dockerfile
+cat Dockerfile
+
+//crea imagen a partir del archivo Dockerfile
+docker build -t [user_name]/[image_name]:[version] .        (-t es la etiqueta target)
+
+//sube la imagen al dockerHub
+docker push [user_name]/[image_name]:[version]
+

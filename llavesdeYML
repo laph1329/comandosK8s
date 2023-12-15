@@ -1,0 +1,13 @@
+******************************************************************
+*******************************YML********************************
+******************************************************************
+
+
+//politica de rebotes, politica de restart de pods (se coloca en el yml)
+
+    restartPolicy: Allways                  es por defecto siempre se reinicia
+    restartPolicy: OnFaillure               solo se reinicia en caso de "error"
+    restartPolicy: Never                    no se reinicia nunca, solo se hara el reinicio manualmente
+
+
+
