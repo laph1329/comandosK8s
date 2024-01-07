@@ -167,3 +167,55 @@ kubectl apply -f multi.yaml
 
 //buscar anotaciones (el primer punto hace referencia al primer nivel del json)
 kubectl get pod [pod_name] -o jsonpath={.metadata.annotations}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////DEPLOYMENTS//////////////////
+
+//crear deployment con un archivo yml
+kubectl apply -f [name_file.yml]
+
+//escalado de pods, con etiquetas
+kubectl scale deploy -l [etiqueta_name]=[value_etiqueta] --replicas=2
+
+//ver revisiones
+kubectl rollout history deploy [name_deploy] -n [name_namespace]
+
+
+////////////////////////////////////////////////////////////////////////////////////////////SERVICES////////////////////
+
+//exponer deployment, el puerto 80, es el puerto interno por el que esta escuchando el pod
+kubectl expose deploy apache1 --port=80 --type=NodePort
+
+//descripción del servicio
+kubectl describe svc [svc_name]
+
+
+//////////////////////////////////////////////////////////////////////////////////////////NAMESPACES////////////////////
+
+//crear namespaces
+kubectl create namespace [name_namespace]
+
+//obtener namespaces
+kubectl get namespaces
+kubectl get ns
+
+//describir namespaces
+kubectl describe namespace [name_namespace]
+
+//obtener objetos de un namespace
+kubectl get [objeto] -n namespace
+
+//eliminar namespace
+kubectl delete namespace [name_namespace]
+
+//crear objetos en un namespaces
+kubectl apply -f [name_file] -n [name_namespace]
+kubectl apply -f [name_file] --namespace=[name_namespace]
+
+
+//ver configuracion de .kube
+kubectl config view
+
+//configurar namespace por defecto
+kubectl config set-context --current --namespace=[name_namespace]
+

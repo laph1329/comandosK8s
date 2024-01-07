@@ -1,0 +1,8 @@
+#kubectl apply -f namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev1
+  labels:
+    tipo: desarrollo
+    equipo: ocp
