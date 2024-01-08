@@ -103,11 +103,17 @@ kubectl apply -f multi.yaml
         kubectl exec [pod_name] -c [container_name] -- date
 
     //acceder al contenedor, y ejecutar comando bash
-        kubectl exec [pod_name] -c [container_name] -- bash
         kubectl exec -it [pod_name] -- bash
+        //si no tiene bash puede tener sh
+        kubectl exec -it [pod_name] -- sh
+        kubectl exec [pod_name] -c [container_name] -- bash
 
         //una evz dentro del bash, ver variables de entorno
             printenv
+        //si el pod es de mysql, para ingresar seria el siquiente comando
+        mysql -u [name_user] -p [schema]
+        show databases;
+        exit
 
 
 //etiqueta apply es similar a create, solo que apply si permite modificaciones , create no permite modificaciones

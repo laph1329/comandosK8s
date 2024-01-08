@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-alt
+  namespace: default
+  labels:
+    app: mysql-alt
+    type: dev
+spec:
+  selector:
+    matchLabels:
+      app: mysql-alt
+      type: dev
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mysql-alt
+        type: dev
+    spec:
+      containers:
+      - name: mysql-alt
+        image: mysql:5.7
+        envFrom:
+          - configMapRef:
+              name: mysql-configmap
+
