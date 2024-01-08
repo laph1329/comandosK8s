@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: nginx
+    namespace: dev1
+    labels:
+        estado: "1"
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 10
+  strategy:
+    type: RollingUpdate #actualiza los pods uno a uno, es decir de manera progresiva
+#    type: Recreate #elimina todos los pods de golpe y los crea de nuevo
+    rollingUpdate:
+      maxSurge: 1 #numero de pods que se pueden crear por encima del numero de replicas
+      maxUnavailable: 1 #numero de pods que se pueden eliminar por debajo del numero de replicas
+  minReadySeconds: 2 #tiempo minimo que debe estar listo un pod antes de que se pueda considerar listo
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.16.1
+        ports:
+        - containerPort: 80
+

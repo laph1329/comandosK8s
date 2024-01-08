@@ -102,6 +102,13 @@ kubectl apply -f multi.yaml
     //acceder al contenedor, y ejecutar comando fecha
         kubectl exec [pod_name] -c [container_name] -- date
 
+    //acceder al contenedor, y ejecutar comando bash
+        kubectl exec [pod_name] -c [container_name] -- bash
+        kubectl exec -it [pod_name] -- bash
+
+        //una evz dentro del bash, ver variables de entorno
+            printenv
+
 
 //etiqueta apply es similar a create, solo que apply si permite modificaciones , create no permite modificaciones
     kubectl apply -f [yml_name].yml
@@ -180,6 +187,18 @@ kubectl scale deploy -l [etiqueta_name]=[value_etiqueta] --replicas=2
 //ver revisiones
 kubectl rollout history deploy [name_deploy] -n [name_namespace]
 
+// ver una revision en especifico
+kubectl rollout history deploy [name_deploy] -n [name_namespace] --revision=1
+
+//hacer rollack a una revision
+kubectl rollout undo deploy [name_deploy] -n [name_namespace] --to-revision=1
+
+
+//////////////////////////////////////////////////////////////////////////////////////////REPLICASET////////////////////
+
+//ver replicasets
+kubectl get rs
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////SERVICES////////////////////
 
@@ -219,3 +238,35 @@ kubectl config view
 //configurar namespace por defecto
 kubectl config set-context --current --namespace=[name_namespace]
 
+//agregar memoria a los namespaces limitRange, usando un yaml
+kubectl apply -f [name_file].yml -n [name_namespace]
+
+//obtener limitRange de un namespace
+kubectl get limitRange -n [name_namespace]
+
+//obtener eventos de un namespace
+kubectl get events -n [name_namespace]
+
+//obtener eventos de un namespace, con mas detalles
+kubectl get events -n [name_namespace] -o wide
+
+//obtener eventos de un namespace, con mas detalles y ordenados por fecha
+kubectl get events -n [name_namespace] -o wide --sort-by=.metadata.creationTimestamp
+
+//obtener eventos filtrados por tipo
+kubectl get events -n [name_namespace] --field-selector type=Warning
+
+//obtener eventos con consola interactiva
+kubectl get events -n [name_namespace] -w
+
+
+//////////////////////////////////////////////////////////////////////////////////////////CONFIGMAPS////////////////////
+
+//crear configmap
+kubectl create configmap [name_configmap] --from-literal=[key]=[value]
+
+//crear configmap desde un archivo, el nombre del archivo es el nombre del key, y el contenido del archivo es el value
+kubectl create configmap [name_configmap] --from-file=[path_file]
+
+//crear configmap desde un archivo, el nombre del archivo es el nombre del key, y el contenido del archivo es el value
+kubectl create configmap [name_configmap] --from-env-file [path_file]

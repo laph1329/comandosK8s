@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+data:
+  MYSQL_DATABASE: 'wordpress'
+  MYSQL_PASSWORD: 'wordpress'
+  MYSQL_ROOT_PASSWORD: 'wordpress'
+  MYSQL_USER: 'wordpress'
+metadata:
+  name: mysql-configmap
+  namespace: dev1
