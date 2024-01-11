@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    app: nginxv1
+spec:
+  selector: #permite seleccion un conjunto de objetos que cumplan las condiciones
+    matchLabels:
+      app: nginx
+  replicas: 10
+  template: #plantilla que define los containers
+    metadata:
+      name: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+      tolerations: #indica que cualquier nodo que tenga la clave memoria con valor grande, se podra ejecutar en el nodo
+        - effect: NoSchedule #y que sea de tipo NoSchedule
+          key: memoria
+          operator: Equal
+          value: grande
+
+

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ResourceQuota #exige a los recursos que se crearan que se especifiquen en el .yaml los recursos que se consumiran
+metadata:
+  name: pods-grandes
+spec:
+  hard:
+    requests.cpu: "100"
+    requests.memory: 500Mi
+    limits.cpu: "500"
+    limits.memory: 1Gi
+    pods: "5" #significa que como maximo se crean 5 pods

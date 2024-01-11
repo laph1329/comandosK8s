@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-v1
+  labels:
+    entorno: dev
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 2
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution: #requerido durante la planificacion, ignorado durante la ejecución
+        nodeSelectorTerms: #terminos del selector
+          - matchExpressions: # comparacion para detectar el nodo
+              - key: equipo # label
+                operator: In # que tenga entre sus valores
+                values:
+                  - desarrollo-web #puede ser web y/o python, cualquiera de los dos
+                  - desarrollo-python # si no encuentra, no se levantara el pod
+  containers:
+    - name: nginx
+      image: nginx

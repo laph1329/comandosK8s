@@ -276,3 +276,24 @@ kubectl create configmap [name_configmap] --from-file=[path_file]
 
 //crear configmap desde un archivo, el nombre del archivo es el nombre del key, y el contenido del archivo es el value
 kubectl create configmap [name_configmap] --from-env-file [path_file]
+
+
+//////////////////////////////////////////////////////////////////////////////////////////TAINT/////////////////////////
+
+//Aagregar taint a un nodo
+kubectl taint nodes [name_node] [key]=[value]:NoSchedule
+
+
+//////////////////////////////////////////////////////////////////////////////////////////VER METRICAS//////////////////
+
+//Ver recursos
+kubectl top
+
+//ver recursos de un pod
+kubectl top pod [name_pod]
+
+//ver recursos de los nodos
+kubectl top nodes
+
+//ver recurso de un nodo
+kubectl top node [name_node]

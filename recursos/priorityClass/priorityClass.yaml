@@ -1,0 +1,20 @@
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: produccion
+value: 100 # hasta 1 billon
+preemptionPolicy: PreemptLowerPriority #explusa a los pod con menor prioridad
+globalDefault: false # si es true, esta prioridad se utilizara para los pod que no tengan clase de prioridad
+#ojo solodebe de haber "un" priorityclass con valor true
+description: "pods para production"
+
+---
+
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: develop
+value: 50
+preemptionPolicy: PreemptLowerPriority # con valor NONE, no expulsa ningun pod
+globalDefault: false
+description: "pods para develop"

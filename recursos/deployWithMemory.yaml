@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    version: dev
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nginx #el valor tiene que ser igual al matchlabel
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+          resources: #el recurso es para la suma de todos los container dentro de un pod
+            limits:
+              memory: "200Mi" # Mi o M cualquiera son para los Megabytes
+              cpu: "2"
+            requests: #peticiones iniciales
+              memory: "100M"
+              cpu: "0.5"
