@@ -2,6 +2,7 @@
 ****************************KUBECTL*******************************
 ******************************************************************
 
+
 //obtener lista pods
 kubectl get pods
 
@@ -297,3 +298,22 @@ kubectl top nodes
 
 //ver recurso de un nodo
 kubectl top node [name_node]
+
+
+//////////////////////////////////////////////////////////////////////////////////////////AUTOESCALADO//////////////////
+
+
+//ver hpa (horizontal pod autoscale)
+kubectl get hpa
+
+//autoescalar pods en un deployment
+kubectl autoscale deploy [name_deploy] --cpu-percent=40 --min=1 --max=8
+
+//mirar continuamente resultados
+watch kubectl get hpa
+
+
+//////////////////////////////////////////////////////////////////////////////////////////VOLUMENES/////////////////////
+
+//entrar en el volume
+kubectl exec -it [name_pod] bash

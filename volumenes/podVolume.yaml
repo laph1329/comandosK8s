@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-prueba
+spec:
+  containers:
+    - name: pod-nginx
+      image: nginx
+      volumeMounts: #se monta dentro del pod
+        - mountPath: /home #dentro del contenedor, este punto de montaje sera /home
+          name: home #el volumen se llamara home
+volumes:
+  - name: home #nombre del volume que debe coincidir con el name dentro del volumeMounts
+    hostPath: #que tipo de driver se quiere utilizar, hosPath es directorio local
+      path: /home/kubernetes/datos

@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-volumenes
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      volumeMounts:
+        - mountPath: /home
+          name: home
+#        - mountPath: /git
+#          name: git
+          readOnly: true #significa de solo lectura
+        - mountPath: /temp
+          name: temp
+  volumes:
+    - name: home
+      hostPath: # hostaph significa que va a estar asociado a un directorio del sistema de ficheros
+        path: /home/kubernetes/datos # directirio real del nodo kubernetes. la maquina fisica, siempre y cuando el
+#        el contenedor tenga permisos de lectura y escritura
+#    - name: git
+#      gitRepo: #va a colar dentro del directorio
+#        repository: https://url.git
+    - name: temp
+      emptyDir: {} #significa que es un directorio temporal, una vez que el pod se acabe, se va a eliminar
+
